@@ -2,13 +2,11 @@ package view;
 
 import model.InvoiceHeader;
 import model.InvoiceLine;
-import model.JTableLoader;
+import controller.JTableLoader;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -156,8 +154,13 @@ public class CRightPanel {
         }
 
         item.setInvoiceLines(new ArrayList<>());
-        for (int i = 0; i < loader.getItems().size(); i++) {  // Loop through the rows
-            InvoiceLine line = loader.getItems().get(i);
+        for (int count = 0; count < loader.model.getRowCount(); count++){
+            InvoiceLine line = new InvoiceLine();
+
+            line.setInvoiceNum(Integer.parseInt(loader.model.getValueAt(count, 0).toString()));
+            line.setItemName(loader.model.getValueAt(count, 1).toString());
+            line.setItemPrice(Double.parseDouble(loader.model.getValueAt(count, 2).toString()));
+            line.setCount(Integer.parseInt(loader.model.getValueAt(count, 3).toString()));
 
             item.getInvoiceLines().add(line);
         }

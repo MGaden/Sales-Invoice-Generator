@@ -1,4 +1,4 @@
-package model;
+package controller;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -15,7 +15,7 @@ public class JTableLoader <T> {
     public final JTable table;
     private List<T> data;
     private Class<T> entity;
-    private DefaultTableModel model;
+    public DefaultTableModel model;
     private String[] bindedProperties = null;
 
     public JTableLoader(JTable table) {
@@ -130,6 +130,11 @@ public class JTableLoader <T> {
             d.add(data.get(table.convertRowIndexToModel(r)));
         }
         return d;
+    }
+
+    // Get list updated data
+    public List<T> getUpdatedData() {
+        return model.getDataVector();
     }
 
     // Get all list item

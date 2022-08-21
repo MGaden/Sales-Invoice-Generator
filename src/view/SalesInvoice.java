@@ -25,23 +25,24 @@ public class SalesInvoice extends JFrame implements ActionListener {
         setMainMenu(this);
         setMainLayout();
 
-        try
-        {
-            ArrayList<InvoiceHeader> invoices = loadDataFromFiles("asset");
-            if(invoices != null && invoices.size() > 0)
-            {
-                leftPanel.loadInvoices(invoices);
-            }else
-            {
-                JOptionPane.showMessageDialog(null,"No data to display","Info",1);
-            }
-        }
-        catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"Error",1);
-        }catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"Error",1);
-        }
+        //comments to load empty table
+//        try
+//        {
+//            ArrayList<InvoiceHeader> invoices = loadDataFromFiles("asset");
+//            if(invoices != null && invoices.size() > 0)
+//            {
+//                leftPanel.loadInvoices(invoices);
+//            }else
+//            {
+//                JOptionPane.showMessageDialog(null,"No data to display","Info",1);
+//            }
+//        }
+//        catch (RuntimeException e) {
+//            JOptionPane.showMessageDialog(null,e.getMessage(),"Error",1);
+//        }catch (Exception e)
+//        {
+//            JOptionPane.showMessageDialog(null,e.getMessage(),"Error",1);
+//        }
 
 
         setSize(300,400);

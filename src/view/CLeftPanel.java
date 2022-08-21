@@ -2,7 +2,7 @@ package view;
 
 import model.InvoiceHeader;
 import model.InvoiceLine;
-import model.JTableLoader;
+import controller.JTableLoader;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -32,7 +32,7 @@ public class CLeftPanel {
 
         JScrollPane jScrollPane1 = new JScrollPane();
 
-        String[] columns = {"Number", "Date", "Customer Name"};
+        String[] columns = {"Number", "Date", "Customer Name", "Invoice Total"};
         DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
 
         tblInvoice = new JTable(tableModel);
@@ -109,7 +109,7 @@ public class CLeftPanel {
 
     void bindInvoiceTable(ArrayList<InvoiceHeader> invoices)
     {
-        loader = new JTableLoader<>(tblInvoice, "getInvoiceNum,getFormatedInvoiceDate,getCustomerName");
+        loader = new JTableLoader<>(tblInvoice, "getInvoiceNum,getFormatedInvoiceDate,getCustomerName,getInvoiceTotal");
 
         loader.table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {

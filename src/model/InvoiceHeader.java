@@ -44,6 +44,17 @@ public class InvoiceHeader {
         this.invoiceLines = invoiceLines;
     }
 
+    public  double getInvoiceTotal()
+    {
+        double invoiceTotal = 0;
+        if(getInvoiceLines() != null && getInvoiceLines().size() > 0 )
+        {
+            for (int i = 0; i < getInvoiceLines().size(); i++) {
+                invoiceTotal = invoiceTotal + getInvoiceLines().get(i).getTotal();
+            }
+        }
+        return invoiceTotal;
+    }
     private int invoiceNum;
 
     private Date invoiceDate;
