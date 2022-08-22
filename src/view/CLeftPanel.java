@@ -79,20 +79,35 @@ public class CLeftPanel {
     }
 
     public void deleteSelectedInvoice() {
-        if(loader.table.getSelectedRow() != -1) {
+        if(loader != null && loader.table != null)
+        {
+            if(loader.table.getSelectedRow() != -1) {
 
-            invoicesLst.remove(loader.table.getSelectedRow());
-            bindInvoiceTable(invoicesLst);
+                invoicesLst.remove(loader.table.getSelectedRow());
+                bindInvoiceTable(invoicesLst);
 
-            JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
+                JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "No data to delete");
         }
+
     }
 
     private void createNewInvoice() {
 
         InvoiceHeader newItem = new InvoiceHeader();
         newItem.setNew(true);
-        newItem.setInvoiceNum(invoicesLst.size() + 1);
+        int invoiceCount = 0;
+        if(invoicesLst != null && invoicesLst.size() > 0)
+        {
+            invoiceCount = invoicesLst.size();
+        }else
+        {
+            invoicesLst = new ArrayList<>();
+        }
+        newItem.setInvoiceNum(invoiceCount + 1);
         newItem.setCustomerName("New Customer " + newItem.getInvoiceNum());
         newItem.setInvoiceDate(new Date());
         newItem.setInvoiceLines(new ArrayList<>());
@@ -115,13 +130,21 @@ public class CLeftPanel {
             public void valueChanged(ListSelectionEvent event) {
 try
 {
-    if(loader.table.getSelectedRow() != -1) {
-        InvoiceHeader item = invoicesLst.get(loader.table.getSelectedRow());
-        if(item != null)
-        {
-            parent.setSelectedInvoiceDetails(item);
+    if(invoicesLst != null && invoicesLst.size() > 0)
+    {
+        if(loader.table.getSelectedRow() != -1) {
+            InvoiceHeader item = invoicesLst.get(loader.table.getSelectedRow());
+            if(item != null)
+            {
+                parent.setSelectedInvoiceDetails(item);
+            }
         }
     }
+    else
+    {
+        parent.clearRightData();
+    }
+
 
 
 }catch (Exception e)

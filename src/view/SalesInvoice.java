@@ -51,11 +51,11 @@ public class SalesInvoice extends JFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    private ArrayList<InvoiceHeader> loadDataFromFiles(String directoryPath) {
+    private ArrayList<InvoiceHeader> loadDataFromFiles(String firstFilePath, String secondFilePath) {
 
         fileOp = new FileOperations();
-        fileOp.set_readInvoiceHeaderFilePath(directoryPath + "/InvoiceHeader.csv");
-        fileOp.set_readInvoiceLineFilePath(directoryPath +"/InvoiceLine.csv");
+        fileOp.set_readInvoiceHeaderFilePath(firstFilePath);
+        fileOp.set_readInvoiceLineFilePath(secondFilePath);
         return fileOp.readFile();
 
     }
@@ -108,8 +108,18 @@ public class SalesInvoice extends JFrame implements ActionListener {
             int result = fc.showOpenDialog(this);
             if(result == JFileChooser.APPROVE_OPTION)
             {
-                String fileDirectoryPath = fc.getSelectedFile().getParent();
-                return loadDataFromFiles(fileDirectoryPath);
+                String firstFilePath = fc.getSelectedFile().getPath();
+                String secondFilePath = "";
+                result = fc.showOpenDialog(this);
+                if(result == JFileChooser.APPROVE_OPTION)
+                {
+                    secondFilePath = fc.getSelectedFile().getPath();
+
+                }else
+                {
+                    JOptionPane.showMessageDialog(null,"You don't select file","Error",1);
+                }
+                return loadDataFromFiles(firstFilePath,secondFilePath);
 
             }else
             {
@@ -134,13 +144,24 @@ public class SalesInvoice extends JFrame implements ActionListener {
             try
             {
                 JFileChooser fc = new JFileChooser();
+                fc.setDialogTitle("Specify a file to save");
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV FILES", "csv");
                 fc.setFileFilter(filter);
-                int result = fc.showOpenDialog(this);
+                int result = fc.showSaveDialog(this);
                 if(result == JFileChooser.APPROVE_OPTION)
                 {
-                    String fileDirectoryPath = fc.getSelectedFile().getParent();
-                    saveDataToFiles(fileDirectoryPath,leftPanel.invoicesLst);
+                    String firstFilePath = fc.getSelectedFile().getPath();
+                    String secondFilePath ="";
+                    result = fc.showSaveDialog(this);
+                    if(result == JFileChooser.APPROVE_OPTION)
+                    {
+                        secondFilePath = fc.getSelectedFile().getPath();
+                        saveDataToFiles(firstFilePath,secondFilePath,leftPanel.invoicesLst);
+                    }else
+                    {
+                        JOptionPane.showMessageDialog(null,"You don't select file","Error",1);
+                    }
+
                 }else
                 {
                     JOptionPane.showMessageDialog(null,"You don't select file","Error",1);
@@ -159,11 +180,11 @@ public class SalesInvoice extends JFrame implements ActionListener {
         }
     }
 
-    private void saveDataToFiles(String fileDirectoryPath, ArrayList<InvoiceHeader> invoicesLst) {
+    private void saveDataToFiles(String firstFilePath, String secondFilePath, ArrayList<InvoiceHeader> invoicesLst) {
 
         FileOperations fileOp = new FileOperations();
-        fileOp.set_readInvoiceHeaderFilePath(fileDirectoryPath + "/SavedInvoiceHeader.csv");
-        fileOp.set_readInvoiceLineFilePath(fileDirectoryPath +"/SavedInvoiceLine.csv");
+        fileOp.set_readInvoiceHeaderFilePath(firstFilePath);
+        fileOp.set_readInvoiceLineFilePath(secondFilePath);
         try {
             fileOp.writeFile(invoicesLst);
             JOptionPane.showMessageDialog(null,"files were saved successfully","Info",1);
@@ -183,5 +204,9 @@ public class SalesInvoice extends JFrame implements ActionListener {
 
     public void saveCurrentItemUpdate(InvoiceHeader item) {
         leftPanel.saveCurrentItemUpdate(item);
+    }
+
+    public void clearRightData() {
+        rightPanel.clearRightData();
     }
 }

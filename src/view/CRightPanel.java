@@ -188,4 +188,12 @@ public class CRightPanel {
         currentInvoiceHeader = item;
         resetInvoiceDetails(item);
     }
+
+    public void clearRightData() {
+        InvoiceNumValueLabel.setText("");
+        invoiceDateTextField.setText("");
+        customerNameTextField.setText("");
+
+        loader.model.setRowCount(0);
+    }
 }
