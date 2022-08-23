@@ -80,6 +80,40 @@ public class CRightPanel {
 
         } );
 
+        JButton addItem = new JButton("Add item");
+        addItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if(loader != null && loader.model != null)
+                {
+                    //invoiceNum, itemName, itemPrice, Count
+                    loader.model.addRow(
+                            new Object[]{
+                                    currentInvoiceHeader.getInvoiceNum(),
+                                    "",
+                                    "","",""
+                            }
+                    );
+                }
+
+            }
+        });
+
+        JButton removeItem = new JButton("Remove item");
+        removeItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if(loader != null && loader.model != null&& loader.table != null) {
+                    if (loader.table.getSelectedRow() != -1) {
+                        loader.model.removeRow(loader.table.getSelectedRow());
+                    }
+                }
+
+            }
+        });
+
         Border blackline = BorderFactory.createTitledBorder("Invoice items");
         JPanel panel = new JPanel();
         LayoutManager layout = new FlowLayout();
@@ -119,6 +153,9 @@ public class CRightPanel {
         saveButton.setBounds(50,800,100,30);
         cancelButton.setBounds(200,800,100,30);
 
+        addItem.setBounds(50,240,100,30);
+        removeItem.setBounds(200,240,120,30);
+
         p1.setLayout(null);
         p1.add(InvoiceNumLabel);
         p1.add(InvoiceNumValueLabel);
@@ -128,6 +165,9 @@ public class CRightPanel {
         p1.add(customerNameTextField);
         p1.add(InvoiceTotalLabel);
         p1.add(InvoiceTotalValueLabel);
+
+        p1.add(addItem);
+        p1.add(removeItem);
 
         p2.add(panel, BorderLayout.CENTER);
 
